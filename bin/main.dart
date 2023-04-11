@@ -4,29 +4,31 @@ import 'package:fc/fc.dart';
 Future<void> main(List<String> arguments) async {
   final parser = ArgParser()
     ..addCommand('create')
-    ..addOption('org', abbr: 'o', defaultsTo: '')
-    ..addOption('empty', abbr: 'e', defaultsTo: '');
+    ..addOption('org', abbr: 'o', defaultsTo: '');
 
   final argsResult = parser.parse(arguments);
-  final command = argsResult.command;
+  final command = argsResult.command!;
 
-  if (command?.name == 'create') {
-    final args = command?.arguments;
-    if (args != null && args.isNotEmpty) {
+  if (command.name == 'create') {
+    final args = command.arguments;
+
+    if (args.isNotEmpty) {
       final targetType = args[0];
       if (targetType == 'project') {
         final projectName = args[1];
-        final org = command?['org'] as String?;
-        final empty = command?['empty'] as String?;
+        final result = <String, String>{};
+        for (int i = 0; i < args.length; i += 2) {
+          result[args[i].replaceAll("--", "")] = args[i + 1];
+        }
+        final org = result['org'] ?? '';
 
         List<String> options = [];
-        if (org != null && org.isNotEmpty) {
+        if (org.isNotEmpty) {
           options.add('--org');
           options.add(org);
         }
-        if (empty != null && empty.isNotEmpty) {
-          options.add('--empty');
-        }
+
+        options.add('--empty');
 
         await createProject(projectName, options);
       } else if (targetType == 'page') {

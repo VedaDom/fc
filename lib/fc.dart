@@ -35,17 +35,17 @@ Future<void> createProject(String projectName, List<String> options) async {
   };
 
   // Create the lib folder
-  final libDir = Directory('${projectName}/lib');
+  final libDir = Directory('$projectName/lib');
   await libDir.delete(recursive: true);
   await libDir.create();
 
   // Create the directory structure
   structure.forEach((key, value) async {
-    final mainDir = Directory('${projectName}/lib/$key');
+    final mainDir = Directory('$projectName/lib/$key');
     await mainDir.create();
 
     for (final subDirName in value) {
-      final subDir = Directory('${projectName}/lib/$key/$subDirName');
+      final subDir = Directory('$projectName/lib/$key/$subDirName');
       await subDir.create();
     }
   });
@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
 }
   ''';
 
-  await createFileWithContent('${projectName}/lib/main.dart', mainDartContent);
+  await createFileWithContent('$projectName/lib/main.dart', mainDartContent);
 
   // auth_provider.dart
   final authProviderContent = '''
@@ -103,7 +103,7 @@ final authProvider =
   ''';
 
   await createFileWithContent(
-      '${projectName}/lib/presentation/providers/auth_provider.dart',
+      '$projectName/lib/presentation/providers/auth_provider.dart',
       authProviderContent);
 
   // app_router.dart
@@ -130,14 +130,13 @@ class AppRouter {
   ''';
 
   await createFileWithContent(
-    '${projectName}/lib/presentation/router/app_router.dart',
+    '$projectName/lib/presentation/router/app_router.dart',
     appRouterContent,
   );
 
   // auth_repository.dart
   final authRepositoryContent = '''
-import 'package:kayko/core/models/user_model.dart';
-
+import '../../core/models/user_model.dart';
 import '../../domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -150,7 +149,7 @@ class AuthRepositoryImpl implements AuthRepository {
   ''';
 
   await createFileWithContent(
-      '${projectName}/lib/data/repositories/auth_repository.dart',
+      '$projectName/lib/data/repositories/auth_repository.dart',
       authRepositoryContent);
 
 // user_model.dart
@@ -166,11 +165,11 @@ class UserModel {
 ''';
 
   await createFileWithContent(
-      '${projectName}/lib/core/models/user_model.dart', userModelContent);
+      '$projectName/lib/core/models/user_model.dart', userModelContent);
 
 // user_data_source.dart
   final userDataSourceContent = '''
-import 'package:kayko/core/models/user_model.dart';
+import '../../core/models/user_model.dart';
 
 abstract class AuthDataSource {
   Future<UserModel> signin(String email, String password);
@@ -183,10 +182,11 @@ class AuthDataSourceImpl implements AuthDataSource {
     throw UnimplementedError();
   }
 }
+
 ''';
 
   await createFileWithContent(
-      '${projectName}/lib/data/datasources/user_data_source.dart',
+      '$projectName/lib/data/datasources/user_data_source.dart',
       userDataSourceContent);
 
 // user_repository.dart
@@ -199,7 +199,7 @@ abstract class AuthRepository {
 ''';
 
   await createFileWithContent(
-      '${projectName}/lib/domain/repositories/auth_repository.dart',
+      '$projectName/lib/domain/repositories/auth_repository.dart',
       userRepositoryContent);
 
   // auth_usecase.dart
@@ -216,8 +216,7 @@ class AuthUseCase {
   ''';
 
   await createFileWithContent(
-      '${projectName}/lib/domain/usecases/auth_usecase.dart',
-      authUseCaseContent);
+      '$projectName/lib/domain/usecases/auth_usecase.dart', authUseCaseContent);
 
   // login_page.dart
   final loginPageContent = '''
@@ -240,8 +239,7 @@ class LoginPage extends ConsumerWidget {
   ''';
 
   await createFileWithContent(
-      '${projectName}/lib/presentation/pages/login_page.dart',
-      loginPageContent);
+      '$projectName/lib/presentation/pages/login_page.dart', loginPageContent);
 
   print('Project created successfully!');
 }
