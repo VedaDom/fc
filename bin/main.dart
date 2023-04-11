@@ -32,7 +32,6 @@ Future<void> main(List<String> arguments) async {
 
         await createProject(projectName, options);
       } else if (targetType == 'page') {
-        final pageName = args[1];
         // Call your function to create a page here
       } else {
         print('Invalid target type. Use "project" or "page"');
