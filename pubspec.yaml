@@ -14,5 +14,4 @@ dev_dependencies:
   test: ^1.21.0
 
 executables:
-  project-generator:
-    path: bin/main.dart
+  fc: fc
